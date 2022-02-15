@@ -1,6 +1,6 @@
 <template>
     <vue-plyr class="container" ref="plyr" :options="playerOptions">
-        <video ref="movie" data-plyr-config="{'autoplay': false}"></video>
+        <video></video>
     </vue-plyr>
 </template>
 
@@ -18,7 +18,7 @@ export default {
         return {
             hlsUrl: process.env.VUE_APP_HLS_URL,
             playerOptions: {
-                controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen'],
+                controls: ['play-large', 'play', 'mute', 'volume', 'fullscreen'],
                 settings: ['quality', 'speed', 'loop'],
             }
         }
