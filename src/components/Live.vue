@@ -27,20 +27,27 @@ export default {
     player() {
       return this.$refs.plyr.player;
     },
-    GetUrlRelativePath() {
-      const url = document.location.toString();
-      const arrUrl = url.split("//");
-      const start = arrUrl[1].indexOf("/");
-      let relUrl = arrUrl[1].substring(start);
-      if (relUrl.indexOf("?") !== -1) {
-        relUrl = relUrl.split("?")[0];
+    getQueryString() {
+      var qs = location.search.substring(1), // 获取url中"?"符后的字串
+          args = {}, // 保存参数数据的对象
+          items = qs.length ? qs.split("&") : [], // 取得每一个参数项,
+          item = null,
+          len = items.length;
+
+      for (var i = 0; i < len; i++) {
+        item = items[i].split("=");
+        var name = decodeURIComponent(item[0]),
+            value = decodeURIComponent(item[1]);
+        if (name) {
+          args[name] = value;
+        }
       }
-      return relUrl;
-    }
+      return args;
+    },
   },
   mounted() {
-    if (this.GetUrlRelativePath){
-      this.hlsUrl=this.hlsUrl+this.GetUrlRelativePath+'/hls.m3u8'
+    if (this.getQueryString['room']) {
+      this.hlsUrl = this.hlsUrl + '/' + this.getQueryString['room'] + '/hls.m3u8'
     }
     if (Hls.isSupported()) {
       const hls = new Hls();
